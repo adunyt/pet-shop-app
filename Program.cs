@@ -15,7 +15,7 @@ namespace WinFormsApp1
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            loginForm.Show();
+            new AddItem().Show();
             Application.Run();
         }
 

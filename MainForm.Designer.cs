@@ -34,30 +34,23 @@
             stockTab = new TabPage();
             toolStrip1 = new ToolStrip();
             stockPlusButton = new ToolStripButton();
-            toolStripButton2 = new ToolStripButton();
+            saveButton = new ToolStripButton();
             stockDataGridView = new DataGridView();
             formLabel = new Label();
             shipmentTab = new TabPage();
             toolStrip2 = new ToolStrip();
             shipmentPlusButton = new ToolStripButton();
-            shipmentEditButton = new ToolStripButton();
+            saveShipmentButton = new ToolStripButton();
             button3 = new Button();
             shipmentDataGridView = new DataGridView();
-            timeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            shipmentGoodIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            providerIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            shipmentGoodListBindingSource = new BindingSource(components);
             label1 = new Label();
             cartTab = new TabPage();
             toolStrip3 = new ToolStrip();
             cartPlusButton = new ToolStripButton();
-            cartEditButton = new ToolStripButton();
-            button2 = new Button();
+            checkoutButton = new Button();
             cartDataGridView = new DataGridView();
-            Column1 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
-            Column3 = new DataGridViewTextBoxColumn();
             label2 = new Label();
+            shipmentGoodListBindingSource = new BindingSource(components);
             bindingSource1 = new BindingSource(components);
             goodBindingSource = new BindingSource(components);
             stockLocationBindingSource = new BindingSource(components);
@@ -70,10 +63,10 @@
             shipmentTab.SuspendLayout();
             toolStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)shipmentDataGridView).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)shipmentGoodListBindingSource).BeginInit();
             cartTab.SuspendLayout();
             toolStrip3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)cartDataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)shipmentGoodListBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)goodBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)stockLocationBindingSource).BeginInit();
@@ -110,10 +103,10 @@
             // toolStrip1
             // 
             toolStrip1.Dock = DockStyle.None;
-            toolStrip1.Items.AddRange(new ToolStripItem[] { stockPlusButton, toolStripButton2 });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { stockPlusButton, saveButton });
             toolStrip1.Location = new Point(21, 351);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(89, 25);
+            toolStrip1.Size = new Size(58, 25);
             toolStrip1.TabIndex = 7;
             // 
             // stockPlusButton
@@ -126,15 +119,15 @@
             stockPlusButton.Text = "Добавить запись";
             stockPlusButton.Click += stockPlusButton_Click;
             // 
-            // toolStripButton2
+            // saveButton
             // 
-            toolStripButton2.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton2.Image = Properties.Resources.Save;
-            toolStripButton2.ImageTransparentColor = Color.Magenta;
-            toolStripButton2.Name = "toolStripButton2";
-            toolStripButton2.Size = new Size(23, 22);
-            toolStripButton2.Text = "Сохранить";
-            toolStripButton2.Click += toolStripButton2_Click;
+            saveButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            saveButton.Image = Properties.Resources.Save;
+            saveButton.ImageTransparentColor = Color.Magenta;
+            saveButton.Name = "saveButton";
+            saveButton.Size = new Size(23, 22);
+            saveButton.Text = "Сохранить";
+            saveButton.Click += saveButton_Click;
             // 
             // stockDataGridView
             // 
@@ -149,9 +142,6 @@
             stockDataGridView.Name = "stockDataGridView";
             stockDataGridView.Size = new Size(616, 292);
             stockDataGridView.TabIndex = 5;
-            stockDataGridView.CellContentClick += stockDataGridView_CellContentClick;
-            stockDataGridView.CellFormatting += stockDataGridView_CellFormatting;
-            stockDataGridView.RowsAdded += stockDataGridView_RowsAdded;
             // 
             // formLabel
             // 
@@ -183,7 +173,7 @@
             // toolStrip2
             // 
             toolStrip2.Dock = DockStyle.None;
-            toolStrip2.Items.AddRange(new ToolStripItem[] { shipmentPlusButton, shipmentEditButton });
+            toolStrip2.Items.AddRange(new ToolStripItem[] { shipmentPlusButton, saveShipmentButton });
             toolStrip2.Location = new Point(21, 349);
             toolStrip2.Name = "toolStrip2";
             toolStrip2.Size = new Size(58, 25);
@@ -198,14 +188,15 @@
             shipmentPlusButton.Size = new Size(23, 22);
             shipmentPlusButton.Text = "Добавить запись";
             // 
-            // shipmentEditButton
+            // saveShipmentButton
             // 
-            shipmentEditButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            shipmentEditButton.Image = Properties.Resources.Edit;
-            shipmentEditButton.ImageTransparentColor = Color.Magenta;
-            shipmentEditButton.Name = "shipmentEditButton";
-            shipmentEditButton.Size = new Size(23, 22);
-            shipmentEditButton.Text = "Редактировать запись";
+            saveShipmentButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            saveShipmentButton.Image = Properties.Resources.Save;
+            saveShipmentButton.ImageTransparentColor = Color.Magenta;
+            saveShipmentButton.Name = "saveShipmentButton";
+            saveShipmentButton.Size = new Size(23, 22);
+            saveShipmentButton.Text = "toolStripButton3";
+            saveShipmentButton.Click += saveButton_Click;
             // 
             // button3
             // 
@@ -224,44 +215,13 @@
             // shipmentDataGridView
             // 
             shipmentDataGridView.AllowUserToAddRows = false;
-            shipmentDataGridView.AllowUserToDeleteRows = false;
             shipmentDataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            shipmentDataGridView.AutoGenerateColumns = false;
             shipmentDataGridView.BackgroundColor = SystemColors.Control;
             shipmentDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            shipmentDataGridView.Columns.AddRange(new DataGridViewColumn[] { timeDataGridViewTextBoxColumn, shipmentGoodIdDataGridViewTextBoxColumn, providerIdDataGridViewTextBoxColumn });
-            shipmentDataGridView.DataSource = shipmentGoodListBindingSource;
             shipmentDataGridView.Location = new Point(21, 56);
             shipmentDataGridView.Name = "shipmentDataGridView";
-            shipmentDataGridView.ReadOnly = true;
             shipmentDataGridView.Size = new Size(617, 290);
             shipmentDataGridView.TabIndex = 8;
-            shipmentDataGridView.CellFormatting += shipmentDataGridView_CellFormatting;
-            // 
-            // timeDataGridViewTextBoxColumn
-            // 
-            timeDataGridViewTextBoxColumn.DataPropertyName = "Time";
-            timeDataGridViewTextBoxColumn.HeaderText = "Time";
-            timeDataGridViewTextBoxColumn.Name = "timeDataGridViewTextBoxColumn";
-            timeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // shipmentGoodIdDataGridViewTextBoxColumn
-            // 
-            shipmentGoodIdDataGridViewTextBoxColumn.DataPropertyName = "ShipmentGoodId";
-            shipmentGoodIdDataGridViewTextBoxColumn.HeaderText = "ShipmentGoodId";
-            shipmentGoodIdDataGridViewTextBoxColumn.Name = "shipmentGoodIdDataGridViewTextBoxColumn";
-            shipmentGoodIdDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // providerIdDataGridViewTextBoxColumn
-            // 
-            providerIdDataGridViewTextBoxColumn.DataPropertyName = "ProviderId";
-            providerIdDataGridViewTextBoxColumn.HeaderText = "ProviderId";
-            providerIdDataGridViewTextBoxColumn.Name = "providerIdDataGridViewTextBoxColumn";
-            providerIdDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // shipmentGoodListBindingSource
-            // 
-            shipmentGoodListBindingSource.DataSource = typeof(Models.ShipmentGoodList);
             // 
             // label1
             // 
@@ -280,7 +240,7 @@
             // 
             cartTab.BackColor = Color.FromArgb(128, 255, 255);
             cartTab.Controls.Add(toolStrip3);
-            cartTab.Controls.Add(button2);
+            cartTab.Controls.Add(checkoutButton);
             cartTab.Controls.Add(cartDataGridView);
             cartTab.Controls.Add(label2);
             cartTab.Location = new Point(26, 4);
@@ -293,10 +253,10 @@
             // toolStrip3
             // 
             toolStrip3.Dock = DockStyle.None;
-            toolStrip3.Items.AddRange(new ToolStripItem[] { cartPlusButton, cartEditButton });
+            toolStrip3.Items.AddRange(new ToolStripItem[] { cartPlusButton });
             toolStrip3.Location = new Point(21, 351);
             toolStrip3.Name = "toolStrip3";
-            toolStrip3.Size = new Size(58, 25);
+            toolStrip3.Size = new Size(35, 25);
             toolStrip3.TabIndex = 11;
             // 
             // cartPlusButton
@@ -307,52 +267,31 @@
             cartPlusButton.Name = "cartPlusButton";
             cartPlusButton.Size = new Size(23, 22);
             cartPlusButton.Text = "Добавить запись";
+            cartPlusButton.Click += cartPlusButton_Click;
             // 
-            // cartEditButton
+            // checkoutButton
             // 
-            cartEditButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            cartEditButton.Image = Properties.Resources.Edit;
-            cartEditButton.ImageTransparentColor = Color.Magenta;
-            cartEditButton.Name = "cartEditButton";
-            cartEditButton.Size = new Size(23, 22);
-            cartEditButton.Text = "Редактировать запись";
-            // 
-            // button2
-            // 
-            button2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            button2.Font = new Font("Roboto", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            button2.Location = new Point(548, 351);
-            button2.Name = "button2";
-            button2.Size = new Size(101, 25);
-            button2.TabIndex = 10;
-            button2.Text = "Оформить";
-            button2.UseVisualStyleBackColor = true;
+            checkoutButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            checkoutButton.Font = new Font("Roboto", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            checkoutButton.Location = new Point(548, 351);
+            checkoutButton.Name = "checkoutButton";
+            checkoutButton.Size = new Size(101, 25);
+            checkoutButton.TabIndex = 10;
+            checkoutButton.Text = "Оформить";
+            checkoutButton.UseVisualStyleBackColor = true;
+            checkoutButton.Click += checkoutButton_Click;
             // 
             // cartDataGridView
             // 
+            cartDataGridView.AllowUserToAddRows = false;
             cartDataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             cartDataGridView.BackgroundColor = SystemColors.ControlLightLight;
             cartDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            cartDataGridView.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3 });
             cartDataGridView.Location = new Point(21, 56);
             cartDataGridView.Name = "cartDataGridView";
             cartDataGridView.Size = new Size(628, 289);
             cartDataGridView.TabIndex = 9;
-            // 
-            // Column1
-            // 
-            Column1.HeaderText = "Товар";
-            Column1.Name = "Column1";
-            // 
-            // Column2
-            // 
-            Column2.HeaderText = "Количество";
-            Column2.Name = "Column2";
-            // 
-            // Column3
-            // 
-            Column3.HeaderText = "Стоимость";
-            Column3.Name = "Column3";
+            cartDataGridView.CellValueChanged += cartDataGridView_CellValueChanged;
             // 
             // label2
             // 
@@ -366,6 +305,10 @@
             label2.Size = new Size(143, 29);
             label2.TabIndex = 7;
             label2.Text = "\U0001f6d2 Корзина";
+            // 
+            // shipmentGoodListBindingSource
+            // 
+            shipmentGoodListBindingSource.DataSource = typeof(Models.ShipmentGoodList);
             // 
             // bindingSource1
             // 
@@ -419,12 +362,12 @@
             toolStrip2.ResumeLayout(false);
             toolStrip2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)shipmentDataGridView).EndInit();
-            ((System.ComponentModel.ISupportInitialize)shipmentGoodListBindingSource).EndInit();
             cartTab.ResumeLayout(false);
             cartTab.PerformLayout();
             toolStrip3.ResumeLayout(false);
             toolStrip3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)cartDataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)shipmentGoodListBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
             ((System.ComponentModel.ISupportInitialize)goodBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)stockLocationBindingSource).EndInit();
@@ -444,7 +387,7 @@
         private ToolStripButton shipmentPlusButton;
         private Label label1;
         private TabPage cartTab;
-        private Button button2;
+        private Button checkoutButton;
         private DataGridView cartDataGridView;
         private Label label2;
         private Button button3;
@@ -454,21 +397,13 @@
         private ToolStrip toolStrip1;
         private ToolStripButton stockPlusButton;
         private ToolStrip toolStrip2;
-        private ToolStripButton toolStripButton1;
-        private ToolStripButton shipmentEditButton;
         private ToolStrip toolStrip3;
         private ToolStripButton cartPlusButton;
-        private ToolStripButton cartEditButton;
         private BindingSource goodBindingSource;
         private BindingSource stockLocationBindingSource;
         private BindingSource bindingSource1;
-        private DataGridViewTextBoxColumn timeDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn shipmentGoodIdDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn providerIdDataGridViewTextBoxColumn;
         private BindingSource shipmentGoodListBindingSource;
-        private ToolStripButton toolStripButton2;
-        private DataGridViewTextBoxColumn Column1;
-        private DataGridViewTextBoxColumn Column2;
-        private DataGridViewTextBoxColumn Column3;
+        private ToolStripButton saveButton;
+        private ToolStripButton saveShipmentButton;
     }
 }

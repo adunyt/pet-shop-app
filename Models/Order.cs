@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WinFormsApp1.Models;
+namespace PetShop.Models;
 
 public partial class Order
 {

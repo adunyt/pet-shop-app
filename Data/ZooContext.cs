@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using WinFormsApp1.Models;
+using PetShop.Models;
 
-namespace WinFormsApp1.Data;
+namespace PetShop.Data;
 
 public partial class ZooContext : DbContext
 {
@@ -223,6 +223,7 @@ public partial class ZooContext : DbContext
             entity.Property(e => e.StockLocationId)
                 .ValueGeneratedNever()
                 .HasColumnName("StockLocationID");
+            entity.Property(e => e.LocationDesc).HasMaxLength(255);
         });
 
         modelBuilder.Entity<User>(entity =>

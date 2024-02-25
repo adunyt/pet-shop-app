@@ -1,12 +1,10 @@
-using System.Text;
-
-namespace WinFormsApp1
+namespace PetShop
 {
     public partial class LoginForm : Form
     {
         public LoginForm()
         {
-            InitializeComponent();   
+            InitializeComponent();
         }
 
         public void ClearForm()

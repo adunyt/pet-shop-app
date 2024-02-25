@@ -1,4 +1,4 @@
-﻿namespace WinFormsApp1
+﻿namespace PetShop
 {
     partial class MainForm
     {
@@ -34,12 +34,8 @@
             stockTab = new TabPage();
             toolStrip1 = new ToolStrip();
             stockPlusButton = new ToolStripButton();
-            stockEditButton = new ToolStripButton();
+            toolStripButton2 = new ToolStripButton();
             stockDataGridView = new DataGridView();
-            goodIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            amountDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            stockLocationIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            bindingSource1 = new BindingSource(components);
             formLabel = new Label();
             shipmentTab = new TabPage();
             toolStrip2 = new ToolStrip();
@@ -58,7 +54,11 @@
             cartEditButton = new ToolStripButton();
             button2 = new Button();
             cartDataGridView = new DataGridView();
+            Column1 = new DataGridViewTextBoxColumn();
+            Column2 = new DataGridViewTextBoxColumn();
+            Column3 = new DataGridViewTextBoxColumn();
             label2 = new Label();
+            bindingSource1 = new BindingSource(components);
             goodBindingSource = new BindingSource(components);
             stockLocationBindingSource = new BindingSource(components);
             menuStrip1 = new MenuStrip();
@@ -67,7 +67,6 @@
             stockTab.SuspendLayout();
             toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)stockDataGridView).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
             shipmentTab.SuspendLayout();
             toolStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)shipmentDataGridView).BeginInit();
@@ -75,6 +74,7 @@
             cartTab.SuspendLayout();
             toolStrip3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)cartDataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)goodBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)stockLocationBindingSource).BeginInit();
             menuStrip1.SuspendLayout();
@@ -110,10 +110,10 @@
             // toolStrip1
             // 
             toolStrip1.Dock = DockStyle.None;
-            toolStrip1.Items.AddRange(new ToolStripItem[] { stockPlusButton, stockEditButton });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { stockPlusButton, toolStripButton2 });
             toolStrip1.Location = new Point(21, 351);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(58, 25);
+            toolStrip1.Size = new Size(89, 25);
             toolStrip1.TabIndex = 7;
             // 
             // stockPlusButton
@@ -124,58 +124,34 @@
             stockPlusButton.Name = "stockPlusButton";
             stockPlusButton.Size = new Size(23, 22);
             stockPlusButton.Text = "Добавить запись";
+            stockPlusButton.Click += stockPlusButton_Click;
             // 
-            // stockEditButton
+            // toolStripButton2
             // 
-            stockEditButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            stockEditButton.Image = Properties.Resources.Edit;
-            stockEditButton.ImageTransparentColor = Color.Magenta;
-            stockEditButton.Name = "stockEditButton";
-            stockEditButton.Size = new Size(23, 22);
-            stockEditButton.Text = "Редактировать запись";
+            toolStripButton2.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButton2.Image = Properties.Resources.Save;
+            toolStripButton2.ImageTransparentColor = Color.Magenta;
+            toolStripButton2.Name = "toolStripButton2";
+            toolStripButton2.Size = new Size(23, 22);
+            toolStripButton2.Text = "Сохранить";
+            toolStripButton2.Click += toolStripButton2_Click;
             // 
             // stockDataGridView
             // 
+            stockDataGridView.AllowUserToAddRows = false;
             stockDataGridView.AllowUserToResizeColumns = false;
             stockDataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            stockDataGridView.AutoGenerateColumns = false;
             stockDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             stockDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             stockDataGridView.BackgroundColor = SystemColors.Control;
             stockDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            stockDataGridView.Columns.AddRange(new DataGridViewColumn[] { goodIdDataGridViewTextBoxColumn, amountDataGridViewTextBoxColumn, stockLocationIdDataGridViewTextBoxColumn });
-            stockDataGridView.DataSource = bindingSource1;
             stockDataGridView.Location = new Point(21, 56);
             stockDataGridView.Name = "stockDataGridView";
             stockDataGridView.Size = new Size(616, 292);
             stockDataGridView.TabIndex = 5;
             stockDataGridView.CellContentClick += stockDataGridView_CellContentClick;
             stockDataGridView.CellFormatting += stockDataGridView_CellFormatting;
-            // 
-            // goodIdDataGridViewTextBoxColumn
-            // 
-            goodIdDataGridViewTextBoxColumn.DataPropertyName = "GoodId";
-            goodIdDataGridViewTextBoxColumn.HeaderText = "GoodId";
-            goodIdDataGridViewTextBoxColumn.Name = "goodIdDataGridViewTextBoxColumn";
-            goodIdDataGridViewTextBoxColumn.Width = 79;
-            // 
-            // amountDataGridViewTextBoxColumn
-            // 
-            amountDataGridViewTextBoxColumn.DataPropertyName = "Amount";
-            amountDataGridViewTextBoxColumn.HeaderText = "Amount";
-            amountDataGridViewTextBoxColumn.Name = "amountDataGridViewTextBoxColumn";
-            amountDataGridViewTextBoxColumn.Width = 83;
-            // 
-            // stockLocationIdDataGridViewTextBoxColumn
-            // 
-            stockLocationIdDataGridViewTextBoxColumn.DataPropertyName = "StockLocationId";
-            stockLocationIdDataGridViewTextBoxColumn.HeaderText = "StockLocationId";
-            stockLocationIdDataGridViewTextBoxColumn.Name = "stockLocationIdDataGridViewTextBoxColumn";
-            stockLocationIdDataGridViewTextBoxColumn.Width = 135;
-            // 
-            // bindingSource1
-            // 
-            bindingSource1.DataSource = typeof(Models.Stock);
+            stockDataGridView.RowsAdded += stockDataGridView_RowsAdded;
             // 
             // formLabel
             // 
@@ -357,10 +333,26 @@
             cartDataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             cartDataGridView.BackgroundColor = SystemColors.ControlLightLight;
             cartDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            cartDataGridView.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3 });
             cartDataGridView.Location = new Point(21, 56);
             cartDataGridView.Name = "cartDataGridView";
             cartDataGridView.Size = new Size(628, 289);
             cartDataGridView.TabIndex = 9;
+            // 
+            // Column1
+            // 
+            Column1.HeaderText = "Товар";
+            Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            Column2.HeaderText = "Количество";
+            Column2.Name = "Column2";
+            // 
+            // Column3
+            // 
+            Column3.HeaderText = "Стоимость";
+            Column3.Name = "Column3";
             // 
             // label2
             // 
@@ -374,6 +366,10 @@
             label2.Size = new Size(143, 29);
             label2.TabIndex = 7;
             label2.Text = "\U0001f6d2 Корзина";
+            // 
+            // bindingSource1
+            // 
+            bindingSource1.DataSource = typeof(Models.Stock);
             // 
             // goodBindingSource
             // 
@@ -418,7 +414,6 @@
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)stockDataGridView).EndInit();
-            ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
             shipmentTab.ResumeLayout(false);
             shipmentTab.PerformLayout();
             toolStrip2.ResumeLayout(false);
@@ -430,6 +425,7 @@
             toolStrip3.ResumeLayout(false);
             toolStrip3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)cartDataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
             ((System.ComponentModel.ISupportInitialize)goodBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)stockLocationBindingSource).EndInit();
             menuStrip1.ResumeLayout(false);
@@ -457,7 +453,6 @@
         private ToolStripMenuItem exitToolStripMenuItem;
         private ToolStrip toolStrip1;
         private ToolStripButton stockPlusButton;
-        private ToolStripButton stockEditButton;
         private ToolStrip toolStrip2;
         private ToolStripButton toolStripButton1;
         private ToolStripButton shipmentEditButton;
@@ -467,12 +462,13 @@
         private BindingSource goodBindingSource;
         private BindingSource stockLocationBindingSource;
         private BindingSource bindingSource1;
-        private DataGridViewTextBoxColumn goodIdDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn amountDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn stockLocationIdDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn timeDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn shipmentGoodIdDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn providerIdDataGridViewTextBoxColumn;
         private BindingSource shipmentGoodListBindingSource;
+        private ToolStripButton toolStripButton2;
+        private DataGridViewTextBoxColumn Column1;
+        private DataGridViewTextBoxColumn Column2;
+        private DataGridViewTextBoxColumn Column3;
     }
 }

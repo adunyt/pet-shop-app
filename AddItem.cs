@@ -1,9 +1,9 @@
-﻿using WinFormsApp1.Models;
+﻿using PetShop.Models;
 
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 
-namespace WinFormsApp1
+namespace PetShop
 {
     public partial class AddItem : Form
     {

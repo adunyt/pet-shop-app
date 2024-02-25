@@ -1,16 +1,13 @@
-﻿using WinFormsApp1.Models;
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 
-namespace WinFormsApp1
+namespace PetShop
 {
     public partial class MainForm : Form
     {
-        private readonly BindingSource stockBindingSource = new();
-        private readonly BindingSource shipmentBindingSource = new();
-        private BindingList<Stock> stockLocalList;
-        private BindingList<ShipmentGoodList> shipmentLocalList;
+        private readonly Data.ZooContext context = new();
+
+        private BindingList<Models.Stock> stockBindingList;
 
 
         public MainForm()
@@ -18,7 +15,7 @@ namespace WinFormsApp1
             InitializeComponent();
         }
 
-        public async void MainForm_Shown()
+        public void MainForm_Shown()
         {
             if (!this.Visible || !Program.isLogin)
             {
@@ -63,36 +60,64 @@ namespace WinFormsApp1
         private void LoadStockData()
         {
             stockDataGridView.AutoGenerateColumns = false;
-            using var context = new Data.ZooContext();
 
             context.Stocks.Load();
 
-            var stocksData = context.Stocks.Include(s => s.Good).Include(s => s.StockLocation).ToList();
-            stockDataGridView.DataSource = stocksData;
+            stockBindingList = context.Stocks.Local.ToBindingList();
+
+            var idColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Id",
+                DataPropertyName = "StockID",
+                ReadOnly = true,
+                ValueType = typeof(int)
+            };
+            stockDataGridView.Columns.Add(idColumn);
+
+            var goodColumn = new DataGridViewComboBoxColumn
+            {
+                HeaderText = "Товар",
+                DataPropertyName = "GoodID",
+                DataSource = context.Goods.ToList(),
+                DisplayMember = "Name",
+                ValueMember = "GoodID"
+            };
+            stockDataGridView.Columns.Add(goodColumn);
+
+            var amountColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Кол-во",
+                DataPropertyName = "Amount",
+                ValueType = typeof(int)
+            };
+            stockDataGridView.Columns.Add(amountColumn);
+
+            var locationColumn = new DataGridViewComboBoxColumn
+            {
+                HeaderText = "Местонахождение",
+                DataPropertyName = "StockLocationID",
+                DataSource = context.StockLocations.ToList(),
+                DisplayMember = "LocationDesc",
+                ValueMember = "StockLocationID"
+            };
+            stockDataGridView.Columns.Add(locationColumn);
+
+            var timeColumn = new DataGridViewComboBoxColumn
+            {
+                HeaderText = "Поставка",
+                DataPropertyName = "ShipmentGoodsId",
+                DataSource = context.ShipmentGoodLists.ToList(),
+                DisplayMember = "Time",
+                ValueMember = "ShipmentGoodsId"
+            };
+            stockDataGridView.Columns.Add(timeColumn);
+
+            stockDataGridView.DataSource = stockBindingList;
+
         }
 
         private void stockDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            using var context = new Data.ZooContext();
-            if (e.ColumnIndex == 0)
-            {
-                if (e.Value != null)
-                {
-                    int goodID = (int)e.Value;
-                    var goodName = context.Goods.FirstOrDefault(g => g.GoodId == goodID)?.Name;
-                    e.Value = goodName;
-                }
-            }
-
-            if (e.ColumnIndex == 2)
-            {
-                if (e.Value != null)
-                {
-                    int stockLocId = (int)e.Value;
-                    var stockLoc = context.StockLocations.FirstOrDefault(s => s.StockLocationId == stockLocId);
-                    e.Value = $"Стеллаж: {stockLoc?.ShelfNumber}, Полка: {stockLoc?.PalleteNumber}";
-                }
-            }
         }
 
 
@@ -123,17 +148,20 @@ namespace WinFormsApp1
         private void LoadShipmentData()
         {
             shipmentDataGridView.AutoGenerateColumns = false;
-            using var context = new Data.ZooContext();
 
             context.ShipmentGoodLists.Load();
 
-            var shipmentData = context.ShipmentGoodLists.Include(s => s.ShipmentGoods).Include(s => s.Provider).ToList();
+            var shipmentData = context.ShipmentGoodLists.Local.ToBindingList();
             shipmentDataGridView.DataSource = shipmentData;
         }
 
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
+            stockDataGridView.EndEdit();
+            shipmentDataGridView.EndEdit();
+            context.SaveChanges();
+            context.Dispose();
             base.OnFormClosing(e);
             e.Cancel = true;
             Application.ExitThread();
@@ -147,6 +175,29 @@ namespace WinFormsApp1
         private void stockDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            stockDataGridView.EndEdit();
+            context.SaveChanges();
+        }
+
+        private void stockDataGridView_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            
+        }
+
+        private void stockPlusButton_Click(object sender, EventArgs e)
+        {
+            var previousRow = stockDataGridView.RowCount - 1;
+            var lastId = stockDataGridView.Rows[previousRow].Cells[0].Value;
+            var newId = (int)lastId + 1;
+            Console.WriteLine($"Change row StockId to {newId}");
+            stockBindingList.Add(
+                new Models.Stock(){
+                    StockId = newId
+                });
         }
     }
 }

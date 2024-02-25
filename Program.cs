@@ -1,6 +1,6 @@
-using WinFormsApp1.Models;
+using PetShop.Models;
 
-namespace WinFormsApp1
+namespace PetShop
 {
     internal static class Program
     {
@@ -15,7 +15,18 @@ namespace WinFormsApp1
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            new AddItem().Show();
+            try
+            {
+                loginForm.Show();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(caption: " –»“»◊≈— ¿ﬂ Œÿ»¡ ¿!",
+                    text: $"{e}",
+                    icon: MessageBoxIcon.Hand,
+                    buttons: MessageBoxButtons.OK);
+                return;
+            }            
             Application.Run();
         }
 

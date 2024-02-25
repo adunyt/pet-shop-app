@@ -32,18 +32,17 @@ namespace PetShop
 
         public static bool CheckCredentials(string username, string password)
         {
-            if (username == "manager" && password == "")
+            using var context = new Data.ZooContext();
+            User? user = context.Users.FirstOrDefault(x => x.Login == username);
+            if (user == null) 
+                return false;
+            var result = BCrypt.Net.BCrypt.Verify(password, user.PasswordHash);
+            if (result)
             {
-                UserType = new() { EmployeeTypeId = 0, Name = "Manager" };
-                return true;
+                UserType = context.UserTypes.FirstOrDefault(x => x.EmployeeTypeId == user.UserTypeId);
             }
-            if (username == "seller" && password == "")
-            {
-                UserType = new() { EmployeeTypeId = 0, Name = "Seller" };
-                return true;
-            }
+            return result;
 
-            return false;
         }
 
         public static void SwitchToMain()

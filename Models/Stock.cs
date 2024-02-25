@@ -17,8 +17,6 @@ public partial class Stock
 
     public virtual Good Good { get; set; } = null!;
 
-    public virtual ICollection<OrderGood> OrderGoods { get; set; } = new List<OrderGood>();
-
     public virtual ShipmentGoodList ShipmentGoods { get; set; } = null!;
 
     public virtual StockLocation StockLocation { get; set; } = null!;

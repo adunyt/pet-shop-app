@@ -7,11 +7,13 @@ public partial class OrderGood
 {
     public int OrderGoodsId { get; set; }
 
-    public int StockId { get; set; }
+    public int GoodId { get; set; }
 
     public int Amount { get; set; }
 
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+    public int OrderId { get; set; }
 
-    public virtual Stock Stock { get; set; } = null!;
+    public virtual Good Good { get; set; } = null!;
+
+    public virtual Order Order { get; set; } = null!;
 }

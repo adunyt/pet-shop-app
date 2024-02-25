@@ -91,7 +91,6 @@ public partial class ZooContext : DbContext
                 .HasColumnName("OrderID");
             entity.Property(e => e.ClientId).HasColumnName("ClientID");
             entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
-            entity.Property(e => e.OrderGoodsId).HasColumnName("OrderGoodsID");
             entity.Property(e => e.Time).HasDefaultValueSql("CURRENT_DATE");
 
             entity.HasOne(d => d.Client).WithMany(p => p.OrderClients)
@@ -103,11 +102,6 @@ public partial class ZooContext : DbContext
                 .HasForeignKey(d => d.EmployeeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("OrderEmployeeFK");
-
-            entity.HasOne(d => d.OrderGoods).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.OrderGoodsId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("OrderGoodsFK");
         });
 
         modelBuilder.Entity<OrderGood>(entity =>
@@ -117,12 +111,18 @@ public partial class ZooContext : DbContext
             entity.Property(e => e.OrderGoodsId)
                 .ValueGeneratedNever()
                 .HasColumnName("OrderGoodsID");
-            entity.Property(e => e.StockId).HasColumnName("StockID");
+            entity.Property(e => e.GoodId).HasColumnName("GoodID");
+            entity.Property(e => e.OrderId).HasColumnName("OrderID");
 
-            entity.HasOne(d => d.Stock).WithMany(p => p.OrderGoods)
-                .HasForeignKey(d => d.StockId)
+            entity.HasOne(d => d.Good).WithMany(p => p.OrderGoods)
+                .HasForeignKey(d => d.GoodId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("OrderGoodsStockFK");
+                .HasConstraintName("GoodID_fkey");
+
+            entity.HasOne(d => d.Order).WithMany(p => p.OrderGoods)
+                .HasForeignKey(d => d.OrderId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("OrderID_fkey");
         });
 
         modelBuilder.Entity<Price>(entity =>
@@ -194,6 +194,7 @@ public partial class ZooContext : DbContext
             entity.Property(e => e.StockId)
                 .ValueGeneratedNever()
                 .HasColumnName("StockID");
+            entity.Property(e => e.Amount).HasDefaultValue(1);
             entity.Property(e => e.GoodId).HasColumnName("GoodID");
             entity.Property(e => e.ShipmentGoodsId).HasColumnName("ShipmentGoodsID");
             entity.Property(e => e.StockLocationId).HasColumnName("StockLocationID");
@@ -240,7 +241,6 @@ public partial class ZooContext : DbContext
             entity.Property(e => e.Login).HasMaxLength(255);
             entity.Property(e => e.PasswordHash).HasMaxLength(255);
             entity.Property(e => e.Patronymic).HasColumnType("character varying");
-            entity.Property(e => e.Salt).HasMaxLength(255);
             entity.Property(e => e.Surname).HasMaxLength(255);
             entity.Property(e => e.UserTypeId).HasColumnName("UserTypeID");
 

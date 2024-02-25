@@ -15,6 +15,8 @@ public partial class Good
 
     public virtual GoodType GoodType { get; set; } = null!;
 
+    public virtual ICollection<OrderGood> OrderGoods { get; set; } = new List<OrderGood>();
+
     public virtual Price Price { get; set; } = null!;
 
     public virtual ICollection<Stock> Stocks { get; set; } = new List<Stock>();

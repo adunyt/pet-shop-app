@@ -15,6 +15,7 @@ namespace PetShop
 
         public MainForm()
         {
+            Disposed += (e, a) => context.Dispose();
             InitializeComponent();
         }
 
@@ -304,7 +305,32 @@ namespace PetShop
 
         private void AddOrder()
         {
-            throw new NotImplementedException();
+            var lastOrderId = context.Orders.Max(x => x.OrderId);
+            var entity = context.Orders.Add(
+                new Models.Order
+                {
+                    OrderId = lastOrderId + 1,
+                    ClientId = 0,
+                    EmployeeId = Program.UserType.EmployeeTypeId,
+                }
+            );
+            var orderId = entity.CurrentValues.GetValue<int>("OrderId");
+            foreach (DataGridViewRow row in cartDataGridView.Rows)
+            {
+                var lastOrderGoodId = context.OrderGoods.Max(x => x.OrderId);
+                var goodId = (int)row.Cells[0].Value;
+                var goodCount = (int)row.Cells[2].Value;
+                context.OrderGoods.Add(
+                    new Models.OrderGood
+                    {
+                        OrderGoodsId = lastOrderGoodId + 1,
+                        GoodId = goodId,
+                        Amount = goodCount,
+                        OrderId = orderId
+                    });
+            }
+            context.SaveChanges();
+            MessageBox.Show(caption: "Успех", text: "Заказ успешно создан", buttons: MessageBoxButtons.OK);
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)

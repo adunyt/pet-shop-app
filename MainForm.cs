@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using PetShop.Models;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -9,8 +10,8 @@ namespace PetShop
     {
         private readonly Data.ZooContext context = new();
 
-        private BindingList<Models.Stock> stockBindingList;
-        private BindingList<Models.ShipmentGoodList> shipmentsBindingList;
+        private BindingList<Models.Stock>? stockBindingList;
+        private BindingList<Models.ShipmentGoodList>? shipmentsBindingList;
 
 
         public MainForm()
@@ -255,6 +256,12 @@ namespace PetShop
 
         private void stockPlusButton_Click(object sender, EventArgs e)
         {
+            if (stockBindingList is null)
+            {
+                MessageBox.Show(caption:"ОШИБКА", text: "Возникла ошибка при подключении к базе данных. Перезайдите в аккаунт. Если ошибка все еще присутствует - сообщите администратору", buttons: MessageBoxButtons.OK);
+                return;
+            }
+
             var previousRow = stockDataGridView.RowCount - 1;
             var lastId = stockDataGridView.Rows[previousRow].Cells[0].Value;
             var newId = (int)lastId + 1;
@@ -267,6 +274,12 @@ namespace PetShop
 
         private void shipmentPlusButton_Click(object sender, EventArgs e)
         {
+            if (shipmentsBindingList is null)
+            {
+                MessageBox.Show(caption: "ОШИБКА", text: "Возникла ошибка при подключении к базе данных. Перезайдите в аккаунт. Если ошибка все еще присутствует - сообщите администратору", buttons: MessageBoxButtons.OK);
+                return;
+            }
+
             var previousRow = shipmentDataGridView.RowCount - 1;
             var lastId = shipmentDataGridView.Rows[previousRow].Cells[0].Value;
             var newId = (int)lastId + 1;
@@ -305,6 +318,12 @@ namespace PetShop
 
         private void AddOrder()
         {
+            if (Program.UserType is null)
+            {
+                MessageBox.Show(caption: "ОШИБКА", text: "Возникла ошибка с аккаунтом. Перезайдите в аккаунт. Если ошибка все еще присутствует - сообщите администратору", buttons: MessageBoxButtons.OK);
+                return;
+            }
+
             var lastOrderId = context.Orders.Max(x => x.OrderId);
             var entity = context.Orders.Add(
                 new Models.Order
@@ -315,9 +334,9 @@ namespace PetShop
                 }
             );
             var orderId = entity.CurrentValues.GetValue<int>("OrderId");
+            var lastOrderGoodId = context.OrderGoods.Max(x => x.OrderId);
             foreach (DataGridViewRow row in cartDataGridView.Rows)
             {
-                var lastOrderGoodId = context.OrderGoods.Max(x => x.OrderId);
                 var goodId = (int)row.Cells[0].Value;
                 var goodCount = (int)row.Cells[2].Value;
                 context.OrderGoods.Add(
@@ -328,6 +347,7 @@ namespace PetShop
                         Amount = goodCount,
                         OrderId = orderId
                     });
+                lastOrderGoodId++;
             }
             context.SaveChanges();
             MessageBox.Show(caption: "Успех", text: "Заказ успешно создан", buttons: MessageBoxButtons.OK);

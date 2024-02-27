@@ -391,7 +391,6 @@
         private DataGridView cartDataGridView;
         private Label label2;
         private Button button3;
-        private Button button4;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem exitToolStripMenuItem;
         private ToolStrip toolStrip1;

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PetShop": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

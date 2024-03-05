@@ -138,7 +138,6 @@
             MaximizeBox = false;
             Name = "LoginForm";
             Text = "Вход";
-            Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
         }

@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PetShop.Models;
-
-public partial class StockLocation
+namespace PetShop.Models
 {
-    public int StockLocationId { get; set; }
+    public partial class StockLocation
+    {
+        public StockLocation()
+        {
+            Stocks = new HashSet<Stock>();
+        }
 
-    public string LocationDesc { get; set; } = null!;
+        public int StockLocationId { get; set; }
+        public string LocationDesc { get; set; } = null!;
 
-    public virtual ICollection<Stock> Stocks { get; set; } = new List<Stock>();
+        public virtual ICollection<Stock> Stocks { get; set; }
+    }
 }

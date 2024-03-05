@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PetShop.Models;
-
-public partial class UserType
+namespace PetShop.Models
 {
-    public int EmployeeTypeId { get; set; }
+    public partial class UserType
+    {
+        public UserType()
+        {
+            Users = new HashSet<User>();
+        }
 
-    public string? Name { get; set; }
+        public int EmployeeTypeId { get; set; }
+        public string? Name { get; set; }
 
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
+        public virtual ICollection<User> Users { get; set; }
+    }
 }

@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PetShop.Models;
-
-public partial class GoodType
+namespace PetShop.Models
 {
-    public int GoodTypeId { get; set; }
+    public partial class GoodType
+    {
+        public GoodType()
+        {
+            Goods = new HashSet<Good>();
+        }
 
-    public string Type { get; set; } = null!;
+        public int GoodTypeId { get; set; }
+        public string Type { get; set; } = null!;
 
-    public virtual ICollection<Good> Goods { get; set; } = new List<Good>();
+        public virtual ICollection<Good> Goods { get; set; }
+    }
 }

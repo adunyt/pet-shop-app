@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using PetShop.Models;
 using System.ComponentModel;
-using System.Windows.Forms;
 
 namespace PetShop
 {
     public partial class MainForm : Form
     {
-        private readonly Data.ZooContext context = new();
+        // 3. THIRD MAIN MODULE - Tabs with data of Cart, Stock and Shipment//
+
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private readonly Data.zooContext context = new();
 
         private BindingList<Models.Stock>? stockBindingList;
         private BindingList<Models.ShipmentGoodList>? shipmentsBindingList;
@@ -18,8 +18,10 @@ namespace PetShop
         {
             Disposed += (e, a) => context.Dispose();
             InitializeComponent();
+            Program.SetAllControlsFont(this.Controls);
         }
 
+        // 5. Init MainForm module //
         public void MainForm_Shown()
         {
             if (!this.Visible || !Program.isLogin)
@@ -44,6 +46,7 @@ namespace PetShop
             }
         }
 
+        // 6. No valid user message shower module //
         private void ShowNoValidUserError()
         {
             var loginRetry = MessageBox.Show(
@@ -59,6 +62,7 @@ namespace PetShop
                 Application.ExitThread();
         }
 
+        // 7. Restrict form based on UserRole module //
         #region Restriction
 
         private void RestrictSeller()
@@ -79,10 +83,18 @@ namespace PetShop
 
         #endregion
 
+        // 8. Load data to diffrent DataGridView module //
         #region Load data
 
         private void LoadStockData()
         {
+            // Skip adding columns if these exists
+            if (stockBindingList is not null)
+            {
+                context.Stocks.Load();
+                return;
+            }
+
             stockDataGridView.AutoGenerateColumns = false;
 
             context.Stocks.Load();
@@ -142,6 +154,13 @@ namespace PetShop
 
         private void LoadShipmentData()
         {
+            // Skip adding columns if these exists
+            if (shipmentsBindingList is not null)
+            {
+                context.Stocks.Load();
+                return;
+            }
+
             shipmentDataGridView.AutoGenerateColumns = false;
 
             context.ShipmentGoodLists.Load();
@@ -218,6 +237,7 @@ namespace PetShop
 
         #endregion
 
+        // 9. Event handler module //
         #region Events
 
         private void exitMenuItem_Click(object sender, EventArgs e)
@@ -252,6 +272,7 @@ namespace PetShop
 
         #endregion
 
+        // 10. Add row to DataGridView module //
         #region PlusButtons Events
 
         private void stockPlusButton_Click(object sender, EventArgs e)
@@ -301,6 +322,7 @@ namespace PetShop
 
         #endregion
 
+        // 11. Price updater module //
         private void cartDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 0 && e.RowIndex >= 0)
@@ -316,6 +338,7 @@ namespace PetShop
             }
         }
 
+        // 12. Order creation module //
         private void AddOrder()
         {
             if (Program.UserType is null)
@@ -355,8 +378,10 @@ namespace PetShop
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
+            Logger.Info($"Closing app from {this.Name}");
             stockDataGridView.EndEdit();
             shipmentDataGridView.EndEdit();
+            Logger.Info($"Saving changes in DB and close connection");
             context.SaveChanges();
             context.Dispose();
             base.OnFormClosing(e);

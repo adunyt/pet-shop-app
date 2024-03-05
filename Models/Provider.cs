@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PetShop.Models;
-
-public partial class Provider
+namespace PetShop.Models
 {
-    public int ProviderId { get; set; }
+    public partial class Provider
+    {
+        public Provider()
+        {
+            ShipmentGoodLists = new HashSet<ShipmentGoodList>();
+        }
 
-    public string Name { get; set; } = null!;
+        public int ProviderId { get; set; }
+        public string Name { get; set; } = null!;
+        public string EmailAddress { get; set; } = null!;
+        public string Address { get; set; } = null!;
 
-    public string EmailAddress { get; set; } = null!;
-
-    public string Address { get; set; } = null!;
-
-    public virtual ICollection<ShipmentGoodList> ShipmentGoodLists { get; set; } = new List<ShipmentGoodList>();
+        public virtual ICollection<ShipmentGoodList> ShipmentGoodLists { get; set; }
+    }
 }

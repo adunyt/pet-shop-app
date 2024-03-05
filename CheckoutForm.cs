@@ -1,5 +1,4 @@
-﻿using Microsoft.Identity.Client;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,6 +13,8 @@ namespace PetShop
     public partial class CheckoutForm : Form
     {
         public decimal moneyAmount = 0;
+
+        // 13. Checkout window module //
 
         public CheckoutForm()
         {

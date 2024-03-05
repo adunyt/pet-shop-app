@@ -93,15 +93,16 @@
             stockTab.Controls.Add(toolStrip1);
             stockTab.Controls.Add(stockDataGridView);
             stockTab.Controls.Add(formLabel);
-            stockTab.Location = new Point(26, 4);
+            stockTab.Location = new Point(27, 4);
             stockTab.Name = "stockTab";
             stockTab.Padding = new Padding(3);
-            stockTab.Size = new Size(657, 405);
+            stockTab.Size = new Size(656, 405);
             stockTab.TabIndex = 0;
             stockTab.Text = "Склад";
             // 
             // toolStrip1
             // 
+            toolStrip1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             toolStrip1.Dock = DockStyle.None;
             toolStrip1.Items.AddRange(new ToolStripItem[] { stockPlusButton, saveButton });
             toolStrip1.Location = new Point(21, 351);
@@ -147,7 +148,7 @@
             // 
             formLabel.AutoSize = true;
             formLabel.BackColor = Color.Transparent;
-            formLabel.Font = new Font("Roboto", 18F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            formLabel.Font = new Font("Roboto", 18F, FontStyle.Bold, GraphicsUnit.Point);
             formLabel.ForeColor = SystemColors.ControlLightLight;
             formLabel.Location = new Point(21, 21);
             formLabel.Margin = new Padding(0);
@@ -163,21 +164,23 @@
             shipmentTab.Controls.Add(button3);
             shipmentTab.Controls.Add(shipmentDataGridView);
             shipmentTab.Controls.Add(label1);
-            shipmentTab.Location = new Point(26, 4);
+            shipmentTab.Location = new Point(27, 4);
             shipmentTab.Name = "shipmentTab";
             shipmentTab.Padding = new Padding(3);
-            shipmentTab.Size = new Size(657, 405);
+            shipmentTab.Size = new Size(656, 405);
             shipmentTab.TabIndex = 1;
             shipmentTab.Text = "Поставки";
             // 
             // toolStrip2
             // 
+            toolStrip2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             toolStrip2.Dock = DockStyle.None;
             toolStrip2.Items.AddRange(new ToolStripItem[] { shipmentPlusButton, saveShipmentButton });
             toolStrip2.Location = new Point(21, 349);
             toolStrip2.Name = "toolStrip2";
-            toolStrip2.Size = new Size(58, 25);
+            toolStrip2.Size = new Size(89, 25);
             toolStrip2.TabIndex = 10;
+            toolStrip2.Click += shipmentPlusButton_Click;
             // 
             // shipmentPlusButton
             // 
@@ -203,7 +206,7 @@
             button3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             button3.BackColor = Color.Transparent;
             button3.FlatStyle = FlatStyle.System;
-            button3.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            button3.Font = new Font("Roboto", 12F, FontStyle.Bold, GraphicsUnit.Point);
             button3.Location = new Point(714, 21);
             button3.Margin = new Padding(0);
             button3.Name = "button3";
@@ -227,7 +230,7 @@
             // 
             label1.AutoSize = true;
             label1.BackColor = Color.Transparent;
-            label1.Font = new Font("Roboto", 18F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label1.Font = new Font("Roboto", 18F, FontStyle.Bold, GraphicsUnit.Point);
             label1.ForeColor = SystemColors.ControlLightLight;
             label1.Location = new Point(21, 21);
             label1.Margin = new Padding(0);
@@ -243,15 +246,16 @@
             cartTab.Controls.Add(checkoutButton);
             cartTab.Controls.Add(cartDataGridView);
             cartTab.Controls.Add(label2);
-            cartTab.Location = new Point(26, 4);
+            cartTab.Location = new Point(27, 4);
             cartTab.Name = "cartTab";
             cartTab.Padding = new Padding(3);
-            cartTab.Size = new Size(657, 405);
+            cartTab.Size = new Size(656, 405);
             cartTab.TabIndex = 2;
             cartTab.Text = "Корзина";
             // 
             // toolStrip3
             // 
+            toolStrip3.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             toolStrip3.Dock = DockStyle.None;
             toolStrip3.Items.AddRange(new ToolStripItem[] { cartPlusButton });
             toolStrip3.Location = new Point(21, 351);
@@ -272,7 +276,7 @@
             // checkoutButton
             // 
             checkoutButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            checkoutButton.Font = new Font("Roboto", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            checkoutButton.Font = new Font("Roboto", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             checkoutButton.Location = new Point(548, 351);
             checkoutButton.Name = "checkoutButton";
             checkoutButton.Size = new Size(101, 25);
@@ -297,7 +301,7 @@
             // 
             label2.AutoSize = true;
             label2.BackColor = Color.Transparent;
-            label2.Font = new Font("Roboto", 18F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            label2.Font = new Font("Roboto", 18F, FontStyle.Bold, GraphicsUnit.Point);
             label2.ForeColor = Color.White;
             label2.Location = new Point(21, 21);
             label2.Margin = new Padding(0);
